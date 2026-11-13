@@ -9,9 +9,9 @@
 
 ---
 
-## 🎥 VIDEO DEMOSTRATIVO
+## VIDEO DEMOSTRATIVO
 
-**Enlace del video en YouTube:** [PENDIENTE DE AGREGAR]
+https://youtu.be/mx2un4pa5FY
 
 El video demuestra el funcionamiento de la topología, las configuraciones de seguridad, las auditorías automatizadas y la capacidad de remediación de los scripts.
 
