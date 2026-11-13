@@ -5,298 +5,277 @@
 **Asignatura:** Seguridad de Redes  
 **Estudiante:** Merolyn Mejía Abreu  
 **Matrícula:** 2025-0827  
-**Herramientas:** GNS3, Cisco IOS, FortiGate, Ubuntu, Python y SSH
+**Entorno:** GNS3, Cisco IOS, FortiGate, Ubuntu y Python
 
 ---
 
-# 🎥 VIDEO DEMOSTRATIVO
+## 🎥 VIDEO DEMOSTRATIVO
 
-**Enlace de YouTube:** [AGREGAR ENLACE DEL VIDEO AQUÍ]
+**Enlace del video en YouTube:** [PENDIENTE DE AGREGAR]
 
-El video presenta el funcionamiento de la topología, las auditorías realizadas, los controles de seguridad implementados y las pruebas de remediación automática.
+El video demuestra el funcionamiento de la topología, las configuraciones de seguridad, las auditorías automatizadas y la capacidad de remediación de los scripts.
 
 ---
 
-# ÍNDICE
+## ÍNDICE
 
 1. Introducción
-2. Propósito del laboratorio
-3. Objetivos
-4. Herramientas utilizadas
-5. Descripción de la topología
-6. Tabla de direccionamiento IP
-7. Configuración inicial de los dispositivos
-8. Metodología de auditoría basada en CIS Benchmarks
-9. Hardening del router Cisco
-10. Hardening del switch Cisco
-11. Hardening del firewall FortiGate
-12. Scripts de automatización
-13. Pruebas de funcionamiento
-14. Prueba de remediación automática
-15. Resultados de las auditorías
-16. Evidencias del laboratorio
-17. Estructura del repositorio
-18. Observaciones y limitaciones
-19. Conclusión
+2. Propósito y objetivos
+3. Herramientas utilizadas
+4. Topología y direccionamiento
+5. Metodología de hardening
+6. Hardening del router Cisco
+7. Hardening del switch Cisco
+8. Hardening del firewall FortiGate
+9. Automatización de auditorías con Python
+10. Remediación automática y verificación
+11. Informes y scripts generados
+12. Resultados generales
+13. Estructura del repositorio
+14. Observaciones y limitaciones
+15. Conclusión
 
 ---
 
 # 1. INTRODUCCIÓN
 
-La seguridad de los dispositivos de red es fundamental para proteger la información y garantizar el funcionamiento de los servicios tecnológicos de una organización.
+La seguridad de los dispositivos de red es fundamental para proteger la infraestructura tecnológica de una organización. 
+Los routers, switches y firewalls permiten establecer comunicaciones y administrar el tráfico, pero una configuración inadecuada puede representar riesgos de seguridad.
 
-Los routers, switches y firewalls permiten establecer comunicaciones, administrar el tráfico y controlar el acceso a diferentes recursos. 
-Sin embargo, cuando estos dispositivos no están configurados correctamente, pueden presentar vulnerabilidades que faciliten accesos no autorizados.
+En este laboratorio se implementó una infraestructura virtual mediante GNS3, integrada por un router Cisco, un switch Cisco, un firewall FortiGate y una máquina Ubuntu utilizada como estación de auditoría.
 
-En esta práctica se desarrolló una topología de red utilizando GNS3, integrada por un router Cisco, un switch Cisco y un firewall FortiGate.
+El trabajo consistió en seleccionar y aplicar medidas de hardening tomando como referencia recomendaciones de seguridad relacionadas con los CIS Benchmarks.
 
-Sobre estos dispositivos se realizaron auditorías de seguridad tomando como referencia recomendaciones de hardening relacionadas con los CIS Benchmarks.
+También se desarrollaron scripts en Python para automatizar la revisión de configuraciones, detectar incumplimientos, aplicar determinadas correcciones y generar informes de los resultados.
 
-También se implementaron scripts en Python para automatizar la revisión de configuraciones, identificar controles que no cumplen y aplicar determinadas correcciones.
-
-Finalmente, se realizaron pruebas para comprobar el funcionamiento de las medidas de seguridad implementadas.
+Finalmente, se realizaron pruebas de conectividad, verificaciones de seguridad, auditorías automatizadas y una prueba de remediación real para comprobar el funcionamiento del laboratorio.
 
 ---
 
-# 2. PROPÓSITO DEL LABORATORIO
+# 2. PROPÓSITO Y OBJETIVOS
 
-El propósito principal de este laboratorio es fortalecer la seguridad de una infraestructura de red mediante la identificación, aplicación y verificación de controles de hardening.
+## 2.1. Propósito
 
-Se busca demostrar cómo una herramienta automatizada puede analizar las configuraciones de los dispositivos, generar reportes de cumplimiento y corregir determinados parámetros inseguros.
+Demostrar cómo se puede fortalecer la seguridad de una infraestructura de red mediante la aplicación de medidas de hardening y el uso de herramientas de automatización.
 
-De esta manera, se reduce la necesidad de realizar todas las verificaciones manualmente y se facilita el proceso de administración de seguridad.
+El laboratorio busca comprobar que es posible evaluar configuraciones, identificar incumplimientos, aplicar correcciones y generar evidencias de los resultados obtenidos.
 
----
+## 2.2. Objetivo general
 
-# 3. OBJETIVOS
+Implementar y verificar medidas de hardening en un router Cisco, un switch Cisco y un firewall FortiGate, utilizando GNS3 y scripts de auditoría desarrollados en Python.
 
-## 3.1. Objetivo general
+## 2.3. Objetivos específicos
 
-Implementar y evaluar medidas de hardening en dispositivos de red mediante auditorías automatizadas basadas en controles de seguridad seleccionados, utilizando Python y una topología virtual en GNS3.
-
-## 3.2. Objetivos específicos
-
-- Diseñar una topología con un router, un switch y un firewall.
-- Configurar el direccionamiento IP de la infraestructura.
-- Establecer comunicación mediante SSH.
-- Identificar configuraciones que representen riesgos de seguridad.
-- Aplicar medidas de hardening.
-- Desarrollar scripts automatizados en Python.
-- Realizar auditorías sin modificar los dispositivos.
-- Implementar una opción de remediación automática.
-- Generar informes antes y después de aplicar las correcciones.
-- Verificar el funcionamiento de los controles implementados.
-- Documentar las pruebas y sus resultados en GitHub.
+- Implementar una topología funcional con los tres dispositivos.
+- Configurar el direccionamiento IP y comprobar la conectividad.
+- Evaluar controles de seguridad seleccionados.
+- Fortalecer la autenticación y administración remota.
+- Deshabilitar servicios innecesarios.
+- Desarrollar scripts de auditoría y remediación.
+- Generar informes previos y posteriores.
+- Demostrar una corrección real.
+- Documentar las configuraciones y los resultados.
 
 ---
 
-# 4. HERRAMIENTAS UTILIZADAS
+# 3. HERRAMIENTAS UTILIZADAS
 
 | Herramienta | Función |
 |---|---|
-| GNS3 | Creación de la topología virtual |
-| Cisco IOS | Configuración del router y switch |
-| FortiGate VM | Implementación y administración del firewall |
-| Ubuntu | Estación utilizada para ejecutar las auditorías |
-| Python 3 | Desarrollo de scripts de automatización |
-| Pexpect | Automatización de conexiones SSH |
-| SSH | Administración remota segura |
-| GitHub | Publicación de la documentación y evidencias |
-| CIS Benchmarks | Referencia para seleccionar controles de seguridad |
+| GNS3 | Implementación de la topología virtual |
+| Cisco IOS | Sistema operativo del router y switch |
+| FortiGate VM | Firewall de la infraestructura |
+| Ubuntu | Estación de auditoría |
+| Python 3 | Desarrollo de scripts |
+| Pexpect | Automatización de sesiones SSH |
+| SSH | Administración remota |
+| CIS Benchmarks | Referencia para seleccionar controles |
+| GitHub | Publicación de documentación y evidencias |
 
 ---
 
-# 5. DESCRIPCIÓN DE LA TOPOLOGÍA
+# 4. TOPOLOGÍA Y DIRECCIONAMIENTO
 
-La infraestructura fue implementada en GNS3 utilizando los siguientes dispositivos:
+## 4.1. Topología implementada
 
-### R1-HARDINING
+![Topología de la infraestructura en GNS3](Imagenes/image1.png)
 
-Router Cisco encargado de proporcionar conectividad a la red del laboratorio.
+**Figura 1. Topología completa del laboratorio implementada en GNS3.**
 
-### SW1-HARDENING
+En esta imagen se observa la infraestructura virtual utilizada durante el desarrollo de la práctica.
 
-Switch Cisco utilizado para interconectar los dispositivos y evaluar controles de administración segura.
+La topología contiene cinco elementos principales:
 
-### FortiGate-VM64-KVM
+- **NAT1:** proporciona conectividad externa al laboratorio.
+- **Firewall FortiGate:** se encuentra entre la red externa y el router Cisco.
+- **R1-HARDINING:** router encargado de comunicar los segmentos de la infraestructura.
+- **SW1-HARDENING:** switch utilizado para conectar la estación de auditoría.
+- **Ubuntu-AUDITOR:** equipo desde el cual se ejecutan las pruebas y los scripts.
 
-Firewall utilizado para verificar y fortalecer los parámetros relacionados con la autenticación y las sesiones administrativas.
+Los indicadores verdes visibles en GNS3 muestran que las conexiones representadas están activas.
 
-### Ubuntu-AUDITOR
-
-Equipo desde el cual se ejecutaron los scripts desarrollados en Python.
-
-### NAT1
-
-Dispositivo utilizado para proporcionar conectividad externa al entorno virtual.
-
-## 5.1. Diagrama de la topología
+La topología sigue el siguiente orden:
 
 ```text
-                  RED EXTERNA
-                      |
-                     NAT1
-                      |
-                R1-HARDINING
-                      |
-                SW1-HARDENING
-                 /          \
-                /            \
-       Ubuntu-AUDITOR      FortiGate
-         10.8.27.10       10.8.27.129
+               NAT1
+                |
+             FORTIGATE
+                |
+           R1-HARDINING
+                |
+           SW1-HARDENING
+                |
+           UBUNTU-AUDITOR
 ```
 
-**Figura 1. Diagrama lógico simplificado de la infraestructura.**
+Esta estructura cumple con el requisito de implementar una infraestructura que contenga un router, un switch y un firewall.
 
-### Captura de la topología
+## 4.2. Direccionamiento IP
 
-![Topología del laboratorio](evidencias/imagenes/topologia.png)
+| Dispositivo | Dirección IP | Función |
+|---|---|---|
+| FortiGate WAN | 192.168.42.35 | Conectividad hacia NAT1 |
+| FortiGate LAN | 10.8.27.129 | Conexión hacia el router |
+| Router Fa0/0 | 10.8.27.1 | Conexión hacia el switch |
+| Router Fa1/0 | 10.8.27.130 | Conexión hacia FortiGate |
+| Switch VLAN 1 | 10.8.27.2 | Administración del switch |
+| Ubuntu-AUDITOR | 10.8.27.10 | Estación de auditoría |
+
+El direccionamiento se organizó utilizando direcciones de la red `10.8.27.0`, relacionadas con los últimos dígitos de la matrícula.
+
+## 4.3. Prueba de conectividad
+
+![Prueba de conectividad entre dispositivos](Imagenes/image2.png)
+
+**Figura 2. Pruebas de conectividad realizadas desde Ubuntu.**
+
+En esta captura se observa la ejecución de tres comandos `ping` desde la máquina Ubuntu-AUDITOR.
+
+```bash
+ping -c 4 10.8.27.1
+ping -c 4 10.8.27.2
+ping -c 4 10.8.27.129
+```
+
+La primera prueba corresponde al router, la segunda al switch y la tercera a FortiGate.
+
+En los tres casos se enviaron cuatro paquetes y se recibieron cuatro respuestas.
+
+Las estadísticas muestran `0% packet loss`, lo que indica que no hubo pérdida de paquetes durante estas pruebas.
+
+**Resultado:** se confirmó la conectividad IP entre Ubuntu y los tres dispositivos que serían auditados.
+
+Esta verificación es importante porque los scripts necesitan comunicarse con los equipos para consultar sus configuraciones mediante SSH.
 
 ---
 
-# 6. TABLA DE DIRECCIONAMIENTO IP
+# 5. METODOLOGÍA DE HARDENING
 
-Se utilizó la red `10.8.27.0/24`, tomando como referencia los últimos dígitos de la matrícula 2025-0827.
+El hardening consiste en fortalecer la configuración de un sistema o dispositivo para reducir riesgos y limitar accesos o servicios innecesarios.
 
-| Dispositivo | Dirección IP | Máscara | Función |
-|---|---|---|---|
-| R1-HARDINING | 10.8.27.1 | 255.255.255.0 | Router principal |
-| SW1-HARDENING | 10.8.27.2 | Por verificar | Administración del switch |
-| Ubuntu-AUDITOR | 10.8.27.10 | 255.255.255.0 | Equipo auditor |
-| FortiGate | 10.8.27.129 | 255.255.255.128 | Firewall |
-| NAT1 | DHCP | Según red NAT | Conectividad externa |
+En esta práctica se seleccionaron controles relacionados con:
 
-**Nota:** El direccionamiento corresponde al esquema utilizado durante el laboratorio. Antes de entregar, se debe confirmar la máscara y dirección de administración del switch y comprobar que la tabla coincida con las configuraciones finales.
+- Autenticación local.
+- Administración remota mediante SSH.
+- Restricción de protocolos de acceso.
+- Tiempo de espera de sesiones.
+- Bloqueo de intentos fallidos.
+- Deshabilitación de servicios innecesarios.
+
+La metodología aplicada fue:
+
+1. Implementar la infraestructura en GNS3.
+2. Configurar el direccionamiento IP.
+3. Comprobar la conectividad.
+4. Revisar las configuraciones de seguridad.
+5. Evaluar los controles seleccionados.
+6. Ejecutar auditorías automatizadas.
+7. Aplicar correcciones cuando fuera necesario.
+8. Realizar auditorías posteriores.
+9. Guardar informes y evidencias.
+
+Los scripts clasifican los controles utilizando dos estados:
+
+**CUMPLE:** el dispositivo tiene el valor esperado.
+
+**NO CUMPLE:** el parámetro no coincide con el criterio establecido y requiere revisión o corrección.
+
+Esta evaluación se limita a los controles seleccionados y no representa una certificación integral de cumplimiento CIS.
 
 ---
 
-# 7. CONFIGURACIÓN INICIAL DE LOS DISPOSITIVOS
+# 6. HARDENING DEL ROUTER CISCO
 
-Antes de realizar las auditorías, se preparó la conectividad y el acceso administrativo de los dispositivos.
+## 6.1. Configuración y verificación de seguridad
 
-## 7.1. Configuración del router
+![Hardening del router Cisco](Imagenes/image3.png)
 
-Se configuró la interfaz LAN y se habilitó la administración mediante SSH.
+**Figura 3. Verificación de las configuraciones de seguridad del router R1-HARDINING.**
 
-Comandos utilizados para verificar la configuración:
+En esta captura se observa la consola del router Cisco y la ejecución de diferentes comandos utilizados para comprobar sus configuraciones.
+
+### Verificación de interfaces
+
+Se ejecutó:
 
 ```cisco
 show ip interface brief
-show running-config
+```
+
+El resultado muestra dos interfaces activas:
+
+| Interfaz | Dirección IP | Estado |
+|---|---|---|
+| FastEthernet0/0 | 10.8.27.1 | up/up |
+| FastEthernet1/0 | 10.8.27.130 | up/up |
+
+Esto confirma que las interfaces utilizadas en la topología están habilitadas y operativas.
+
+### Verificación de SSH
+
+Se ejecutó:
+
+```cisco
 show ip ssh
+```
+
+La salida muestra que SSH está habilitado en la versión 2.0.
+
+SSH permite administrar el router mediante una conexión cifrada, reduciendo la exposición de las credenciales durante la administración remota.
+
+### Seguridad de la consola
+
+Se ejecutó:
+
+```cisco
 show running-config | section line con
-show running-config | section line vty
 ```
 
-Estos comandos permitieron comprobar el direccionamiento IP, las interfaces activas y los parámetros de administración.
-
-![Configuración del router](evidencias/imagenes/router.png)
-
-## 7.2. Configuración del switch
-
-El switch fue configurado con una dirección de administración y acceso mediante SSH.
-
-Comandos de verificación:
+El resultado muestra:
 
 ```cisco
-show running-config
-show ip ssh
-show running-config | section line vty
-show running-config | include ip http
-```
-
-![Configuración del switch](evidencias/imagenes/switch.png)
-
-## 7.3. Configuración del firewall FortiGate
-
-El firewall fue preparado para permitir conexiones administrativas mediante SSH.
-
-Se utilizó el siguiente comando para revisar sus parámetros:
-
-```text
-show full-configuration system global
-```
-
-Esto permitió consultar los tiempos de espera administrativos, los parámetros de bloqueo y las versiones SSH permitidas.
-
-![Configuración de FortiGate](evidencias/imagenes/fortigate.png)
-
----
-
-# 8. METODOLOGÍA DE AUDITORÍA BASADA EN CIS BENCHMARKS
-
-Los CIS Benchmarks son guías que contienen recomendaciones para configurar sistemas y dispositivos de manera segura.
-
-En esta práctica se seleccionaron controles relacionados con la administración de los dispositivos y la reducción de configuraciones inseguras.
-
-El procedimiento utilizado fue el siguiente:
-
-1. Obtener las configuraciones de los dispositivos.
-2. Identificar los parámetros de seguridad seleccionados.
-3. Comparar sus valores con los criterios esperados.
-4. Generar un informe de auditoría.
-5. Identificar controles que no cumplen.
-6. Aplicar las correcciones correspondientes.
-7. Ejecutar una auditoría posterior.
-8. Guardar los reportes y evidencias.
-
-Los scripts clasifican los resultados utilizando dos estados:
-
-- **CUMPLE:** el parámetro evaluado coincide con el criterio definido.
-- **NO CUMPLE:** el parámetro necesita una corrección.
-
-**Alcance:** La práctica utiliza controles de hardening seleccionados como referencia. No constituye una auditoría integral ni una certificación oficial de cumplimiento CIS.
-
----
-
-# 9. HARDENING DEL ROUTER CISCO
-
-En el router se aplicaron medidas para fortalecer la autenticación y el acceso administrativo.
-
-## 9.1. Tiempo de espera de consola
-
-Configuración:
-
-```cisco
-line console 0
+line con 0
  exec-timeout 5 0
-```
-
-**Justificación:**
-
-Esta configuración establece un tiempo de espera de cinco minutos para las sesiones inactivas.
-
-Su propósito es evitar que una sesión administrativa permanezca abierta indefinidamente.
-
-## 9.2. Autenticación local
-
-Configuración:
-
-```cisco
-line console 0
+ logging synchronous
  login local
+ stopbits 1
 ```
 
-**Justificación:**
+**`exec-timeout 5 0`:** establece un tiempo máximo de cinco minutos de inactividad.
 
-Permite solicitar las credenciales de un usuario local antes de conceder acceso a la consola.
+**`login local`:** utiliza la base de usuarios locales para la autenticación.
 
-## 9.3. Eliminación de privilegios directos
+También se verificó que la línea de consola no tuviera una asignación directa de `privilege level 15`.
 
-Configuración:
+### Seguridad del acceso remoto
+
+Se ejecutó:
 
 ```cisco
-line console 0
- no privilege level
+show running-config | section line vty
 ```
 
-**Justificación:**
-
-Evita asignar directamente el nivel de privilegio 15 a la consola.
-
-## 9.4. Acceso remoto mediante SSH
-
-Configuración:
+La configuración encontrada fue:
 
 ```cisco
 line vty 0 4
@@ -305,153 +284,169 @@ line vty 0 4
  transport input ssh
 ```
 
-**Justificación:**
+Esto demuestra que las conexiones administrativas remotas utilizan SSH y autenticación local.
 
-SSH permite administrar los dispositivos mediante conexiones cifradas y evita utilizar Telnet.
+### Servicios web
 
-## 9.5. Resultados del router
-
-| Control | Resultado |
-|---|---|
-| Tiempo de espera de consola | CUMPLE |
-| Autenticación local | CUMPLE |
-| Sin privilegio 15 directo | CUMPLE |
-
-**Resultado final: 3 de 3 controles automatizados cumplen.**
-
----
-
-# 10. HARDENING DEL SWITCH CISCO
-
-En el switch se evaluaron cinco controles relacionados con la administración segura.
-
-## 10.1. SSH versión 2
-
-```cisco
-ip ssh version 2
-```
-
-**Justificación:**
-
-Permite utilizar una versión segura del protocolo SSH para la administración remota.
-
-## 10.2. Acceso remoto exclusivamente mediante SSH
-
-```cisco
-line vty 0 4
- transport input ssh
-```
-
-**Justificación:**
-
-Evita utilizar protocolos de administración remota sin cifrado.
-
-## 10.3. Autenticación local
-
-```cisco
-line vty 0 4
- login local
-```
-
-**Justificación:**
-
-Exige autenticación mediante los usuarios locales del dispositivo.
-
-## 10.4. Deshabilitación de HTTP
+También se comprobó:
 
 ```cisco
 no ip http server
-```
-
-**Justificación:**
-
-Deshabilita el servicio HTTP que no es necesario para administrar el switch en este laboratorio.
-
-## 10.5. Deshabilitación de HTTPS
-
-```cisco
 no ip http secure-server
 ```
 
-**Justificación:**
+Estos comandos indican que los servicios web de administración HTTP y HTTPS están deshabilitados.
 
-Reduce los servicios de administración disponibles cuando no se necesita acceso web.
+## 6.2. Justificación del hardening
 
-## 10.6. Resultados del switch
+Las medidas aplicadas al router buscan:
 
-| Control | Resultado |
-|---|---|
-| SSH versión 2 | CUMPLE |
-| Acceso remoto solo SSH | CUMPLE |
-| Autenticación local | CUMPLE |
-| HTTP deshabilitado | CUMPLE |
-| HTTPS deshabilitado | CUMPLE |
+- Evitar sesiones administrativas abiertas indefinidamente.
+- Exigir autenticación para acceder al dispositivo.
+- Restringir el acceso remoto a SSH.
+- Evitar privilegios máximos asignados directamente a la consola.
+- Reducir la exposición de servicios de administración innecesarios.
 
-**Resultado final: 5 de 5 controles automatizados cumplen.**
+**Resultado:** se verificó que el router tiene aplicados los controles de seguridad seleccionados.
 
 ---
 
-# 11. HARDENING DEL FIREWALL FORTIGATE
+# 7. HARDENING DEL SWITCH CISCO
 
-En FortiGate se evaluaron controles relacionados con la seguridad de las sesiones administrativas.
+## 7.1. Configuración y verificación
 
-## 11.1. Tiempo de espera administrativo
+![Hardening del switch Cisco](Imagenes/image4.png)
 
-Se verificó que las sesiones administrativas tuvieran un límite de inactividad.
+**Figura 4. Verificación de las configuraciones de seguridad del switch SW1-HARDENING.**
 
-**Justificación:**
+En esta imagen se observa la consola del switch Cisco y la ejecución de comandos para verificar sus controles de seguridad.
 
-Evitar que una sesión permanezca abierta cuando no está siendo utilizada.
+### Dirección IP de administración
 
-## 11.2. Deshabilitación de SSH versión 1
+Se ejecutó:
 
-```text
-config system global
-    set admin-ssh-v1 disable
-end
+```cisco
+show ip interface brief
 ```
 
-**Justificación:**
+El resultado muestra que la interfaz VLAN 1 tiene la dirección IP `10.8.27.2` y se encuentra activa.
 
-Evitar el uso de una versión antigua del protocolo SSH.
+Esta dirección permite administrar el switch desde la estación Ubuntu.
 
-## 11.3. Bloqueo después de intentos fallidos
+### SSH versión 2
 
-```text
-config system global
-    set admin-lockout-threshold 3
-end
+Se ejecutó:
+
+```cisco
+show ip ssh
 ```
 
-**Justificación:**
+La salida confirma que SSH versión 2.0 está habilitado.
 
-Limitar la cantidad de intentos fallidos de autenticación administrativa.
+### Configuración VTY
 
-## 11.4. Duración del bloqueo
+Se ejecutó:
 
-```text
-config system global
-    set admin-lockout-duration 60
-end
+```cisco
+show running-config | section line vty
 ```
 
-**Justificación:**
+El resultado muestra:
 
-Establecer un período de bloqueo temporal después de alcanzar el límite de intentos fallidos.
-
-## 11.5. Tiempo de espera de consola
-
-Durante las pruebas se identificó inicialmente:
-
-```text
-set admin-console-timeout 0
+```cisco
+line vty 0 4
+ exec-timeout 5 0
+ login local
+ transport input ssh
 ```
 
-Se intentó configurar un tiempo de espera de cinco minutos.
+Esta configuración establece autenticación local, restringe el acceso remoto a SSH y limita el tiempo de inactividad.
 
-Sin embargo, FortiGate indicó que el valor permitido debía encontrarse entre 15 y 300 minutos, además del valor 0.
+### Deshabilitación de servicios web
 
-Por esta razón se aplicó:
+Se ejecutó:
+
+```cisco
+show running-config | include ip http
+```
+
+La salida muestra:
+
+```cisco
+no ip http server
+no ip http secure-server
+```
+
+Esto confirma que HTTP y HTTPS están deshabilitados.
+
+## 7.2. Controles seleccionados
+
+| Control | Resultado esperado | Justificación |
+|---|---|---|
+| SSH versión 2 | Habilitado | Administración cifrada |
+| Acceso remoto | Solo SSH | Restringir protocolos |
+| Autenticación local | Habilitada | Controlar el acceso |
+| Servidor HTTP | Deshabilitado | Reducir servicios innecesarios |
+| Servidor HTTPS | Deshabilitado | Evitar administración web no utilizada |
+
+**Resultado:** los cinco controles seleccionados se verificaron correctamente.
+
+---
+
+# 8. HARDENING DEL FIREWALL FORTIGATE
+
+## 8.1. Configuración administrativa
+
+![Hardening de FortiGate](Imagenes/image5.png)
+
+**Figura 5. Verificación de los parámetros de seguridad administrativa de FortiGate.**
+
+En esta captura se observa la consola del firewall FortiGate y la consulta de su configuración global.
+
+Se ejecutó:
+
+```text
+show full-configuration system global | grep admin-
+```
+
+El resultado muestra los siguientes parámetros:
+
+```text
+set admin-console-timeout 15
+set admin-lockout-duration 60
+set admin-lockout-threshold 3
+set admin-ssh-v1 disable
+```
+
+También se ejecutó:
+
+```text
+show full-configuration system global | grep admintimeout
+```
+
+El resultado fue:
+
+```text
+set admintimeout 5
+```
+
+## 8.2. Explicación de los controles
+
+| Parámetro | Valor | Propósito |
+|---|---|---|
+| `admintimeout` | 5 | Cerrar sesiones administrativas inactivas |
+| `admin-ssh-v1` | disable | Deshabilitar SSH versión 1 |
+| `admin-lockout-threshold` | 3 | Establecer un límite de intentos fallidos |
+| `admin-lockout-duration` | 60 | Aplicar un bloqueo temporal |
+| `admin-console-timeout` | 15 | Limitar la inactividad de la consola |
+
+### Particularidad encontrada
+
+Durante el laboratorio se intentó establecer un tiempo de espera de consola de cinco minutos.
+
+Sin embargo, la versión de FortiGate utilizada no admitía ese valor.
+
+Por esta razón se estableció el mínimo permitido de quince minutos:
 
 ```text
 config system global
@@ -459,223 +454,104 @@ config system global
 end
 ```
 
-La verificación posterior mostró:
+Este ajuste permitió cumplir con el criterio definido para el laboratorio.
 
-```text
-set admin-console-timeout 15
+## 8.3. Auditoría complementaria de FortiGate
+
+![Auditoría completa de FortiGate](Imagenes/image7.png)
+
+**Figura 6. Auditoría posterior de los cinco controles seleccionados de FortiGate.**
+
+En esta captura se observa la ejecución del script:
+
+```bash
+python scripts/auditoria_fortigate_despues.py
 ```
 
-**Justificación:**
+El programa evaluó cinco controles utilizando la configuración posterior guardada.
 
-Evitar que una sesión administrativa de consola permanezca abierta indefinidamente.
+Los resultados fueron:
 
-## 11.6. Resultados de FortiGate
+```text
+Tiempo de espera administrativo: CUMPLE
+SSH version 1 deshabilitado: CUMPLE
+Bloqueo de autenticacion: CUMPLE
+Duracion del bloqueo: CUMPLE
+Tiempo de espera de consola: CUMPLE
+```
 
-| Control | Antes | Después |
-|---|---|---|
-| Tiempo de espera administrativo | CUMPLE | CUMPLE |
-| SSH versión 1 deshabilitado | CUMPLE | CUMPLE |
-| Bloqueo tras tres intentos | CUMPLE | CUMPLE |
-| Duración del bloqueo | CUMPLE | CUMPLE |
-| Tiempo de espera de consola | NO CUMPLE | CUMPLE |
+Cada resultado incluye una explicación breve sobre el propósito del control.
 
-**Resultado final: 5 de 5 controles cumplen.**
+Esta auditoría complementaria permite revisar los cinco parámetros seleccionados, mientras que el script principal de hardening de FortiGate automatiza la verificación y posible corrección del tiempo de espera de consola.
+
+**Resultado:** cinco controles administrativos verificados correctamente.
 
 ---
 
-# 12. SCRIPTS DE AUTOMATIZACIÓN
+# 9. AUTOMATIZACIÓN DE AUDITORÍAS CON PYTHON
 
-Para automatizar las auditorías y las correcciones se desarrollaron scripts en Python utilizando Pexpect.
+Para automatizar las verificaciones se desarrollaron scripts en Python que utilizan conexiones SSH para consultar las configuraciones de los dispositivos.
 
-Esta biblioteca permite interactuar con las sesiones SSH de los dispositivos y analizar las respuestas obtenidas.
+Los scripts principales son:
 
-## 12.1. Scripts principales
+```text
+scripts/hardening_router.py
+scripts/hardening_switch.py
+scripts/hardening_fortigate.py
+```
 
-| Script | Función |
-|---|---|
-| `hardening_router.py` | Auditoría y remediación del router |
-| `hardening_switch.py` | Auditoría y remediación del switch |
-| `hardening_fortigate.py` | Auditoría y remediación del control automatizado de FortiGate |
-| `auditoria_router.py` | Auditoría complementaria del router |
-| `auditoria_switch.py` | Auditoría complementaria del switch |
-| `auditoria_fortigate.py` | Auditoría de FortiGate |
-| `auditoria_fortigate_despues.py` | Auditoría posterior de FortiGate |
+## 9.1. Funcionamiento del modo 1
 
-## 12.2. Modo 1: auditoría sin modificar
+La primera opción permite realizar una auditoría sin modificar la configuración.
 
-Los scripts presentan un menú con dos opciones:
+El procedimiento consiste en:
+
+1. Solicitar las credenciales.
+2. Establecer la conexión SSH.
+3. Consultar la configuración.
+4. Evaluar los controles seleccionados.
+5. Mostrar los resultados.
+6. Generar un informe.
+
+## 9.2. Evidencia de auditorías automatizadas
+
+![Auditorías automatizadas de router, switch y FortiGate](Imagenes/image6.png)
+
+**Figura 7. Ejecución del modo 1 en los tres dispositivos.**
+
+En esta captura se observa la ejecución de los tres scripts principales desde Ubuntu.
+
+Se utilizaron los comandos:
+
+```bash
+python scripts/hardening_router.py
+python scripts/hardening_switch.py
+python scripts/hardening_fortigate.py
+```
+
+En los tres programas se seleccionó:
 
 ```text
 1. Auditar sin modificar
-2. Aplicar remediacion y verificar
 ```
 
-Al seleccionar la opción 1, el programa:
+### Router
 
-1. Establece una conexión SSH.
-2. Consulta los parámetros de seguridad.
-3. Evalúa los controles seleccionados.
-4. Genera un informe de cumplimiento.
-5. Finaliza sin modificar la configuración.
-
-## 12.3. Modo 2: remediación automática
-
-Al seleccionar la opción 2, el programa:
-
-1. Ejecuta una auditoría inicial.
-2. Identifica los controles que no cumplen.
-3. Aplica las correcciones definidas.
-4. Ejecuta una auditoría posterior.
-5. Guarda los resultados.
-
-## 12.4. Ejecución de los scripts
-
-Desde la carpeta principal del proyecto en Ubuntu:
-
-**Router:**
-
-```bash
-python scripts/hardening_router.py
-```
-
-**Switch:**
-
-```bash
-python scripts/hardening_switch.py
-```
-
-**FortiGate:**
-
-```bash
-python scripts/hardening_fortigate.py
-```
-
-Las credenciales administrativas se solicitan durante la ejecución para evitar incluir contraseñas directamente en el código.
-
----
-
-# 13. PRUEBAS DE FUNCIONAMIENTO
-
-Se realizaron diferentes pruebas para comprobar la conectividad y el funcionamiento de la automatización.
-
-## 13.1. Prueba de conectividad
-
-Desde Ubuntu se comprobó la comunicación con el router:
-
-```bash
-ping 10.8.27.1
-```
-
-**Resultado:** Comunicación exitosa.
-
-## 13.2. Prueba de acceso SSH
-
-Se verificó que Ubuntu pudiera establecer sesiones SSH con los dispositivos de administración.
-
-**Resultado:** Conexiones realizadas correctamente durante las auditorías.
-
-## 13.3. Prueba de auditoría del router
-
-Se ejecutó:
-
-```bash
-python scripts/hardening_router.py
-```
-
-Se seleccionó la opción 1.
-
-**Resultado:** Los tres controles automatizados aparecieron como `CUMPLE`.
-
-## 13.4. Prueba de auditoría del switch
-
-Se ejecutó:
-
-```bash
-python scripts/hardening_switch.py
-```
-
-Se seleccionó la opción 1.
-
-**Resultado:** Los cinco controles aparecieron como `CUMPLE` en la auditoría final.
-
-## 13.5. Prueba de auditoría de FortiGate
-
-Se ejecutó:
-
-```bash
-python scripts/hardening_fortigate.py
-```
-
-Se seleccionó la opción 1.
-
-**Resultado:** El control automatizado del tiempo de espera de consola apareció como `CUMPLE`.
-
-Adicionalmente, la auditoría posterior de FortiGate verificó cinco controles de seguridad.
-
----
-
-# 14. PRUEBA DE REMEDIACIÓN AUTOMÁTICA
-
-Esta fue una de las pruebas más importantes del laboratorio, porque permitió comprobar que el script podía detectar y corregir una configuración insegura.
-
-## 14.1. Generación de un incumplimiento
-
-Para realizar la prueba, se habilitó temporalmente el servidor HTTP del switch:
-
-```cisco
-configure terminal
-ip http server
-end
-```
-
-Al verificar la configuración se obtuvo:
+Se verificaron tres controles:
 
 ```text
-ip http server
-no ip http secure-server
-```
-
-Esto permitió crear un escenario controlado en el que el servidor HTTP estaba habilitado.
-
-## 14.2. Auditoría inicial
-
-Se ejecutó el script:
-
-```bash
-python scripts/hardening_switch.py
-```
-
-Se seleccionó la opción 1.
-
-El programa detectó:
-
-```text
-SSH version 2: CUMPLE
-Acceso remoto solo SSH: CUMPLE
+Tiempo de espera de 5 minutos: CUMPLE
 Autenticacion local: CUMPLE
-Servidor HTTP deshabilitado: NO CUMPLE
-Servidor HTTPS deshabilitado: CUMPLE
+Sin privilegio 15 directo: CUMPLE
 ```
 
-### Evidencia del incumplimiento
+El informe generado fue:
 
-![HTTP no cumple](evidencias/imagenes/http_no_cumple.png)
+`reportes/hardening_router_auditoria.txt`
 
-## 14.3. Aplicación de la remediación
+### Switch
 
-Se ejecutó nuevamente el script, esta vez seleccionando la opción 2.
-
-El programa identificó el incumplimiento y aplicó la corrección:
-
-```cisco
-no ip http server
-```
-
-## 14.4. Auditoría posterior
-
-Después de aplicar la corrección, el script realizó una nueva auditoría.
-
-Resultado:
+Se verificaron cinco controles:
 
 ```text
 SSH version 2: CUMPLE
@@ -685,118 +561,318 @@ Servidor HTTP deshabilitado: CUMPLE
 Servidor HTTPS deshabilitado: CUMPLE
 ```
 
-### Evidencia de la remediación
+El informe generado fue:
 
-![Remediación del switch](evidencias/imagenes/remediacion_switch.png)
+`reportes/hardening_switch_auditoria.txt`
 
-## 14.5. Verificación directa en el switch
+### FortiGate
 
-Para confirmar la corrección, se ejecutó:
-
-```cisco
-show running-config | include ip http
-```
-
-El dispositivo mostró:
+El script principal verificó:
 
 ```text
-no ip http server
-no ip http secure-server
+Tiempo de espera de consola: CUMPLE
 ```
 
-Finalmente, se guardó la configuración:
+El informe generado fue:
 
-```cisco
-copy running-config startup-config
-```
+`reportes/hardening_fortigate_auditoria.txt`
 
-**Resultado de la prueba:**
+### Interpretación
 
-El script detectó correctamente una configuración que no cumplía, aplicó la remediación y confirmó que el control pasó a `CUMPLE`.
+La imagen demuestra que los tres programas pueden ejecutarse desde Ubuntu y generar resultados de auditoría.
+
+También demuestra el funcionamiento de la opción 1, que no aplica modificaciones a los dispositivos.
+
+**Resultado:** auditorías automatizadas completadas correctamente.
 
 ---
 
-# 15. RESULTADOS DE LAS AUDITORÍAS
+# 10. REMEDIACIÓN AUTOMÁTICA Y VERIFICACIÓN
 
-Después de aplicar las medidas de hardening, los resultados finales fueron:
+La segunda opción de los scripts permite realizar una auditoría previa, aplicar las correcciones contempladas cuando sean necesarias y generar una auditoría posterior.
+
+## 10.1. Ejecución del modo 2 en el switch
+
+![Modo de remediación del switch](Imagenes/image8.png)
+
+**Figura 8. Ejecución del modo 2 en SW1-HARDENING.**
+
+En esta captura se ejecuta:
+
+```bash
+python scripts/hardening_switch.py
+```
+
+Se selecciona:
+
+```text
+2. Aplicar remediacion y verificar
+```
+
+El programa realiza una auditoría previa y muestra que los cinco controles cumplen.
+
+Por esta razón indica:
+
+```text
+Todos los controles cumplen. No se aplicaron cambios.
+```
+
+Posteriormente ejecuta la auditoría final y genera:
+
+```text
+reportes/hardening_switch_previo.txt
+reportes/hardening_switch_posterior.txt
+```
+
+Esto demuestra que el programa puede ejecutar el modo 2 sin modificar innecesariamente una configuración que ya cumple.
+
+## 10.2. Demostración de una corrección real
+
+![Comparación antes y después de la remediación HTTP](Imagenes/image9.png)
+
+**Figura 9. Comparación del estado del servidor HTTP antes y después de la corrección.**
+
+Esta prueba demuestra un cambio real en uno de los controles del switch.
+
+Para realizarla, anteriormente se habilitó temporalmente el servidor HTTP dentro del entorno controlado de GNS3.
+
+Después se ejecutó la auditoría y el programa identificó el incumplimiento.
+
+### Estado anterior
+
+En la primera parte de la captura se consulta:
+
+```bash
+cat evidencias/prueba_remediacion/switch_http_no_cumple.txt
+```
+
+El resultado muestra:
+
+```text
+SSH version 2: CUMPLE
+Acceso remoto solo SSH: CUMPLE
+Autenticacion local: CUMPLE
+Servidor HTTP deshabilitado: NO CUMPLE
+Servidor HTTPS deshabilitado: CUMPLE
+```
+
+El servidor HTTP aparece como `NO CUMPLE` porque estaba habilitado.
+
+### Estado posterior
+
+En la segunda parte se consulta:
+
+```bash
+cat evidencias/prueba_remediacion/switch_despues_remediacion.txt
+```
+
+El resultado muestra:
+
+```text
+SSH version 2: CUMPLE
+Acceso remoto solo SSH: CUMPLE
+Autenticacion local: CUMPLE
+Servidor HTTP deshabilitado: CUMPLE
+Servidor HTTPS deshabilitado: CUMPLE
+```
+
+### Comparación
+
+| Control | Antes | Después |
+|---|---|---|
+| SSH versión 2 | CUMPLE | CUMPLE |
+| Acceso remoto solo SSH | CUMPLE | CUMPLE |
+| Autenticación local | CUMPLE | CUMPLE |
+| **Servidor HTTP deshabilitado** | **NO CUMPLE** | **CUMPLE** |
+| Servidor HTTPS deshabilitado | CUMPLE | CUMPLE |
+
+Esta comparación demuestra que el incumplimiento HTTP quedó corregido.
+
+La captura muestra los informes guardados; el código del script y la demostración en video complementan la explicación del procedimiento de remediación.
+
+**Resultado:** corrección del incumplimiento HTTP verificada mediante auditoría posterior.
+
+## 10.3. Ejecución del modo 2 en router y FortiGate
+
+![Remediación y verificación del router y FortiGate](Imagenes/image12.png)
+
+**Figura 10. Ejecución de la opción 2 en el router y FortiGate.**
+
+En esta captura se observa la ejecución de los scripts:
+
+```bash
+python scripts/hardening_router.py
+python scripts/hardening_fortigate.py
+```
+
+En ambos casos se seleccionó la opción 2.
+
+### Router
+
+El programa realizó una auditoría previa de tres controles:
+
+- Tiempo de espera de cinco minutos.
+- Autenticación local.
+- Ausencia de privilegio 15 directo.
+
+Los tres controles aparecieron como `CUMPLE`.
+
+El programa indicó que no era necesario aplicar cambios.
+
+Después realizó una auditoría posterior y guardó:
+
+```text
+reportes/hardening_router_previo.txt
+reportes/hardening_router_posterior.txt
+```
+
+### FortiGate
+
+El programa evaluó el tiempo de espera de consola.
+
+El resultado fue:
+
+```text
+Tiempo de espera de consola: CUMPLE
+Valor requerido para este laboratorio: 15 minutos
+```
+
+Después generó:
+
+```text
+reportes/hardening_fortigate_previo.txt
+reportes/hardening_fortigate_posterior.txt
+```
+
+### Interpretación
+
+La evidencia demuestra que los scripts del router y FortiGate permiten ejecutar el modo 2 y generar los informes correspondientes.
+
+En estas ejecuciones no fue necesario aplicar modificaciones porque los controles evaluados ya cumplían.
+
+**Resultado:** modo de remediación y verificación ejecutado correctamente en los tres dispositivos.
+
+---
+
+# 11. INFORMES Y SCRIPTS GENERADOS
+
+## 11.1. Informes de auditoría
+
+![Verificación de los informes generados](Imagenes/image10.png)
+
+**Figura 11. Listado de informes generados por los scripts.**
+
+En esta captura se ejecuta:
+
+```bash
+ls -lh reportes/hardening_router_*.txt reportes/hardening_switch_*.txt reportes/hardening_fortigate_*.txt
+```
+
+El resultado muestra nueve informes principales.
+
+Cada dispositivo cuenta con:
+
+- Informe de auditoría.
+- Informe previo.
+- Informe posterior.
+
+| Dispositivo | Auditoría | Previo | Posterior |
+|---|---|---|---|
+| Router | Generado | Generado | Generado |
+| Switch | Generado | Generado | Generado |
+| FortiGate | Generado | Generado | Generado |
+
+Esta evidencia demuestra que los scripts guardan los resultados en archivos que pueden revisarse posteriormente.
+
+## 11.2. Scripts del laboratorio
+
+![Verificación de los scripts Python](Imagenes/image11.png)
+
+**Figura 12. Archivos Python utilizados durante el laboratorio.**
+
+En esta captura se ejecuta:
+
+```bash
+ls -lh scripts/*.py
+```
+
+El resultado muestra once archivos Python.
+
+Entre ellos se encuentran:
+
+- Scripts principales de hardening.
+- Scripts complementarios de auditoría.
+- Scripts auxiliares de conexión y verificación.
+- Herramientas para preparar respaldos y configuraciones públicas.
+
+Los tres scripts principales son:
+
+```text
+hardening_router.py
+hardening_switch.py
+hardening_fortigate.py
+```
+
+La captura demuestra que los archivos se encuentran guardados dentro del proyecto.
+
+El código fuente publicado en el repositorio permite revisar las funciones implementadas.
+
+---
+
+# 12. RESULTADOS GENERALES
+
+Los resultados finales de los controles seleccionados fueron:
 
 | Dispositivo | Controles evaluados | Controles cumplidos |
 |---|---:|---:|
 | Router Cisco | 3 | 3 |
 | Switch Cisco | 5 | 5 |
 | FortiGate | 5 | 5 |
-| **TOTAL** | **13** | **13** |
+| **Total** | **13** | **13** |
 
-## 15.1. Porcentaje de cumplimiento
+## Porcentaje de cumplimiento
 
 ```text
-Cumplimiento = (Controles cumplidos / Controles evaluados) × 100
-
 Cumplimiento = (13 / 13) × 100
-
 Cumplimiento = 100 %
 ```
 
-**Resultado final: 100 % de cumplimiento de los controles seleccionados.**
+Este resultado corresponde únicamente a los trece controles seleccionados para el laboratorio.
 
-Este resultado corresponde únicamente a los 13 controles evaluados y no representa un cumplimiento integral de todos los CIS Benchmarks.
+No representa una certificación integral de cumplimiento CIS.
 
----
+## Resultados de la automatización
 
-# 16. EVIDENCIAS DEL LABORATORIO
+Se comprobó que:
 
-En esta sección se presentan las capturas que demuestran la implementación y el funcionamiento de la infraestructura.
-
-## Evidencia 1. Topología de GNS3
-
-![Topología](evidencias/imagenes/topologia.png)
-
-## Evidencia 2. Configuración del router
-
-![Router](evidencias/imagenes/router.png)
-
-## Evidencia 3. Configuración del switch
-
-![Switch](evidencias/imagenes/switch.png)
-
-## Evidencia 4. Configuración de FortiGate
-
-![FortiGate](evidencias/imagenes/fortigate.png)
-
-## Evidencia 5. Auditoría del router
-
-![Auditoría router](evidencias/imagenes/auditoria_router.png)
-
-## Evidencia 6. Auditoría del switch
-
-![Auditoría switch](evidencias/imagenes/auditoria_switch.png)
-
-## Evidencia 7. Auditoría de FortiGate
-
-![Auditoría FortiGate](evidencias/imagenes/auditoria_fortigate.png)
-
-## Evidencia 8. Incumplimiento HTTP
-
-![HTTP no cumple](evidencias/imagenes/http_no_cumple.png)
-
-## Evidencia 9. Remediación automática
-
-![Remediación](evidencias/imagenes/remediacion_switch.png)
-
-## Evidencia 10. Verificación posterior
-
-![Resultado final](evidencias/imagenes/resultado_final.png)
+- Los tres scripts principales ejecutan auditorías.
+- Los tres permiten seleccionar el modo de remediación.
+- Se generan informes previos y posteriores.
+- Se documentó una corrección real del servicio HTTP en el switch.
+- Los scripts identifican cuándo no es necesario aplicar cambios.
 
 ---
 
-# 17. ESTRUCTURA DEL REPOSITORIO
-
-La siguiente estructura organiza los archivos de documentación y evidencias.
+# 13. ESTRUCTURA DEL REPOSITORIO
 
 ```text
 Asignacion4-CIS-Hardening/
 |
 |-- README.md
+|
+|-- Imagenes/
+|   |-- image1.png
+|   |-- image2.png
+|   |-- image3.png
+|   |-- image4.png
+|   |-- image5.png
+|   |-- image6.png
+|   |-- image7.png
+|   |-- image8.png
+|   |-- image9.png
+|   |-- image10.png
+|   |-- image11.png
+|   |-- image12.png
 |
 |-- scripts/
 |   |-- hardening_router.py
@@ -806,13 +882,22 @@ Asignacion4-CIS-Hardening/
 |   |-- auditoria_switch.py
 |   |-- auditoria_fortigate.py
 |   |-- auditoria_fortigate_despues.py
+|   |-- prueba_router.py
+|   |-- prueba_fortigate.py
+|   |-- prueba_ssh.py
+|   |-- respaldo_fortigate_despues.py
+|   |-- sanitizar_fortigate.py
 |
 |-- reportes/
-|   |-- auditoria_router_antes.txt
-|   |-- auditoria_switch_antes.txt
-|   |-- auditoria_switch_despues.txt
-|   |-- auditoria_fortigate_antes.txt
-|   |-- auditoria_fortigate_despues.txt
+|   |-- hardening_router_auditoria.txt
+|   |-- hardening_router_previo.txt
+|   |-- hardening_router_posterior.txt
+|   |-- hardening_switch_auditoria.txt
+|   |-- hardening_switch_previo.txt
+|   |-- hardening_switch_posterior.txt
+|   |-- hardening_fortigate_auditoria.txt
+|   |-- hardening_fortigate_previo.txt
+|   |-- hardening_fortigate_posterior.txt
 |
 |-- configuraciones_publicas/
 |   |-- router_running_config.txt
@@ -821,71 +906,59 @@ Asignacion4-CIS-Hardening/
 |
 |-- evidencias/
 |   |-- prueba_remediacion/
-|   |   |-- switch_http_no_cumple.txt
-|   |   |-- switch_antes_remediacion.txt
-|   |   |-- switch_despues_remediacion.txt
-|   |
-|   |-- imagenes/
-|       |-- topologia.png
-|       |-- router.png
-|       |-- switch.png
-|       |-- fortigate.png
-|       |-- auditoria_router.png
-|       |-- auditoria_switch.png
-|       |-- auditoria_fortigate.png
-|       |-- http_no_cumple.png
-|       |-- remediacion_switch.png
-|       |-- resultado_final.png
+|       |-- switch_http_no_cumple.txt
+|       |-- switch_antes_remediacion.txt
+|       |-- switch_despues_remediacion.txt
 ```
 
-**Nota:** Las imágenes indicadas son nombres propuestos. Deben subirse a esas rutas para que aparezcan correctamente en el README. Las configuraciones públicas deben revisarse para evitar publicar credenciales, claves o información sensible.
+Las running-configs deben publicarse únicamente después de revisar y ocultar contraseñas, hashes y claves privadas.
+
+Los respaldos originales se conservan fuera del repositorio público.
 
 ---
 
-# 18. OBSERVACIONES Y LIMITACIONES
+# 14. OBSERVACIONES Y LIMITACIONES
 
-Durante el desarrollo del laboratorio se identificaron las siguientes situaciones:
+## Compatibilidad de FortiGate
 
-### Compatibilidad de FortiGate
+La versión utilizada no permitió configurar un tiempo de espera de consola de cinco minutos.
 
-La versión utilizada no permitió establecer un tiempo de espera de consola de cinco minutos.
+Se utilizó el mínimo admitido de quince minutos.
 
-Por esta razón se configuró el valor mínimo admitido de 15 minutos.
+## Alcance de los scripts
 
-### Automatización
+El script principal de FortiGate automatiza la revisión y posible corrección del tiempo de espera de consola.
 
-La prueba de remediación automática del switch demostró que el script podía identificar y corregir un incumplimiento real.
+Los otros cuatro controles se evalúan mediante una auditoría complementaria.
 
-En otros casos, los scripts comprobaron que los controles ya cumplían y no necesitaban modificaciones adicionales.
+## Corrección real
 
-### Respaldo inicial de FortiGate
+La remediación del servicio HTTP del switch fue documentada mediante informes anteriores y posteriores.
 
-Durante las pruebas, el archivo original de configuración inicial fue sobrescrito.
+Las ejecuciones posteriores del modo 2 no necesitaron aplicar cambios adicionales.
 
-Sin embargo, se conservó el reporte inicial de auditoría, que permite documentar el incumplimiento detectado antes de la corrección.
+## Alcance de CIS Benchmarks
 
-### Protección de credenciales
+El laboratorio utiliza controles seleccionados de hardening alineados con prácticas de configuración segura.
 
-Para publicar las configuraciones en GitHub se deben utilizar versiones revisadas y sanitizadas.
-
-No deben publicarse contraseñas, hashes de autenticación, claves privadas ni otros secretos.
-
-### Alcance del análisis CIS
-
-La práctica evaluó controles seleccionados de hardening. No se realizó una auditoría integral de todos los controles de los CIS Benchmarks.
+No se realizó una auditoría integral de todos los controles de una versión específica de CIS Benchmarks.
 
 ---
 
-# 19. CONCLUSIÓN
+# 15. CONCLUSIÓN
 
-Durante esta práctica se pudo comprobar la importancia de mantener los dispositivos de red con configuraciones seguras. A través de GNS3 se implementó una infraestructura con un router, un switch y un firewall, en la cual se revisaron diferentes parámetros relacionados con la administración, la autenticación y los servicios habilitados.
+Durante el desarrollo de esta práctica pude comprobar la importancia de mantener los dispositivos de red con configuraciones seguras. 
+Mediante GNS3 implemente una infraestructura con un router, un switch y un firewall, 
+sobre los cuales se realizaron verificaciones relacionadas con la autenticación, el acceso administrativo y los servicios habilitados.
 
-Uno de los aspectos más importantes fue el desarrollo de los scripts en Python, ya que permitieron automatizar las auditorías y generar reportes de cumplimiento. Además, mediante una prueba controlada en el switch, se demostró que el programa podía identificar una configuración insegura y aplicar una corrección automáticamente.
+Uno de los aspectos más importantes fue la automatización mediante Python, ya que permitió realizar auditorías, generar informes y comprobar el estado de los controles seleccionados. 
+Además, mediante una prueba controlada en el switch, se demostró que el programa podía identificar una configuración insegura y aplicar una corrección.
 
-En general, el laboratorio permitió poner en práctica conocimientos de seguridad de redes y comprender cómo el hardening y la automatización ayudan a reducir riesgos y facilitar la administración de los dispositivos.
+En general, el laboratorio permitió fortalecer los conocimientos de seguridad de redes y comprender cómo las medidas de hardening y 
+las herramientas de automatización ayudan a reducir riesgos y facilitar la administración de una infraestructura tecnológica.
 
 ---
 
 **Asignación 4 – Auditoría y Hardening de Dispositivos de Red**  
-**Merolyn Mejía Abreu – 2025-0827**  
+**Merolyn Mejía Abreu – Matrícula 2025-0827**  
 **Instituto Tecnológico de Las Américas (ITLA)**
