@@ -1,0 +1,107 @@
+R1
+
+R1-HARDINING#show running-config
+Building configuration...
+
+Current configuration : 1288 bytes
+!
+! Last configuration change at 21:15:27 UTC Thu Nov 12 2026
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname R1-HARDINING
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+no ip icmp rate-limit unreachable
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name hardining.local
+ip cef
+no ipv6 cef
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+username router privilege 15 secret 5 $1$f3oD$hutWR9y7QuAebWgzojlWY.
+!
+!
+!
+!
+!
+ip tcp synwait-time 5
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ description LAN_HARDENING
+ ip address 10.8.27.1 255.255.255.128
+ ip nat inside
+ duplex full
+!
+interface FastEthernet1/0
+ description CONEXION_FORTIGATE
+ ip address 10.8.27.130 255.255.255.128
+ ip nat outside
+ duplex full
+!
+ip nat inside source list NAT_LAN interface FastEthernet1/0 overload
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 10.8.27.129
+!
+ip access-list standard NAT_LAN
+ permit 10.8.27.0 0.0.0.127
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ exec-timeout 5 0
+ logging synchronous
+ login local
+ stopbits 1
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ exec-timeout 5 0
+ login local
+ transport input ssh
+!
+!
+end
+
+R1-HARDINING#
