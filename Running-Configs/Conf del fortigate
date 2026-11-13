@@ -1,0 +1,48 @@
+Conf Fortigate
+
+FortiGate-VM64-KVM # show full-configuration system global | grep admintimeout
+    set admintimeout 5
+
+FortiGate-VM64-KVM # show full-configuration system global | grep admin-console-timeout
+    set admin-console-timeout 15
+
+FortiGate-VM64-KVM # show full-configuration system global | grep admin-ssh-v1
+    set admin-ssh-v1 disable
+
+FortiGate-VM64-KVM # show full-configuration system global | grep admin-lockout-threshold
+    set admin-lockout-threshold 3
+
+FortiGate-VM64-KVM # show full-configuration system global | grep admin-lockout-duration
+    set admin-lockout-duration 60
+
+FortiGate-VM64-KVM # show full-configuration system global | grep admin-lockout
+    set admin-lockout-duration 60
+    set admin-lockout-threshold 3
+
+FortiGate-VM64-KVM # show full-configuration system global | grep admin-
+    set admin-concurrent enable
+    set admin-console-timeout 15
+    set admin-forticloud-sso-login disable
+    set admin-host ''
+    set admin-https-pki-required disable
+    unset admin-https-ssl-banned-ciphers
+    set admin-https-ssl-ciphersuites TLS-AES-128-GCM-SHA256 TLS-AES-256-GCM-SHA384 TLS-CHACHA20-POLY1305-SHA256
+    set admin-https-ssl-versions tlsv1-2
+    set admin-lockout-duration 60
+    set admin-lockout-threshold 3
+    set admin-login-max 100
+    set admin-maintainer enable
+    set admin-port 80
+    set admin-restrict-local disable
+    set admin-scp disable
+    set admin-server-cert "self-sign"
+    set admin-sport 443
+    set admin-ssh-grace-time 120
+    set admin-ssh-password enable
+    set admin-ssh-port 22
+    set admin-ssh-v1 disable
+    set admin-telnet enable
+    set admin-telnet-port 23
+    set management-port-use-admin-sport enable
+
+FortiGate-VM64-KVM #
